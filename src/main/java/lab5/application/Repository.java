@@ -44,6 +44,11 @@ public interface Repository {
     public Game[] getAllGames();
 
     /**
+     * Delete all games.
+     */
+    public void deleteAllGames();
+
+    /**
      * Create a new player with the given information.
      * @param firstName the first name of the player; must not be null
      * @param lastName the last name of the player; must not be null
@@ -89,6 +94,11 @@ public interface Repository {
     public Player[] getAllPlayers();
 
     /**
+     * Delete all players.
+     */
+    public void deleteAllPlayers();
+
+    /**
      * Create a new player and game with the given information.
      * @param gameId the id of the game
      * @param playerId the id of the player
@@ -126,5 +136,10 @@ public interface Repository {
      * @return all player and games
      */
     public PlayerAndGame[] getAllPlayerAndGames();
+
+    /**
+     * Delete all player and games.
+     */
+    public void deleteAllPlayerAndGames();
 
 }

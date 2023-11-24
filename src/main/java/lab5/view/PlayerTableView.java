@@ -40,13 +40,15 @@ public class PlayerTableView {
         refreshButton.addActionListener(this::onRefreshButtonClicked);
         newButton.addActionListener(this::onNewButtonClicked);
         deleteButton.addActionListener(this::onDeleteButtonClicked);
+        deleteButton.setEnabled(false);
         editButton.addActionListener(this::onEditButtonClicked);
+        editButton.setEnabled(false);
         scrollPanel.setPreferredSize(new Dimension(800, 600));
         customizeTable();
     }
 
     private void customizeTable() {
-        table.setShowHorizontalLines(true);
+        table.setShowGrid(true);
         TableColumnModel columnModel = table.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(50);
         columnModel.getColumn(1).setPreferredWidth(100);
@@ -62,17 +64,19 @@ public class PlayerTableView {
             }
             Player player = getSelectedPlayer();
             if (player != null) {
-                System.out.println(player);
+                editButton.setEnabled(true);
+                deleteButton.setEnabled(true);
+            } else {
+                editButton.setEnabled(false);
+                deleteButton.setEnabled(false);
             }
         });
         table.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent mouseEvent) {
                 JTable table =(JTable) mouseEvent.getSource();
-                if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
-                    Player player = getSelectedPlayer();
-                    if (player != null) {
-                        showPlayerView(player, PlayerViewMode.VIEW);
-                    }
+                int selectedRowIndex = table.getSelectedRow();
+                if (mouseEvent.getClickCount() == 2 && selectedRowIndex != -1) {
+                    onTableMouseDoubleClicked();
                 }
             }
         });
@@ -94,6 +98,13 @@ public class PlayerTableView {
 
     public Repository getRepository() {
         return repository;
+    }
+
+    private void onTableMouseDoubleClicked() {
+        Player player = getSelectedPlayer();
+        if (player != null) {
+            showPlayerView(player, PlayerViewMode.VIEW);
+        }
     }
 
     private void onRefreshButtonClicked(ActionEvent e) {

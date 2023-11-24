@@ -129,4 +129,19 @@ public class MemoryRepository implements Repository {
         return playerAndGameMap.values().toArray(new PlayerAndGame[playerAndGameMap.size()]);
     }
 
+    @Override
+    public void deleteAllGames() {
+        gameMap.clear();
+    }
+
+    @Override
+    public void deleteAllPlayers() {
+        playerMap.clear();
+    }
+
+    @Override
+    public void deleteAllPlayerAndGames() {
+        playerAndGameMap.clear();
+    }
+
 }
