@@ -22,12 +22,18 @@ public class PlayerView {
     private JButton cancelButton;
     private JButton editButton;
     private JLabel idLabel;
+    private JLabel firstNameLabel;
+    private JLabel lastNameLabel;
+    private JLabel addressLabel;
+    private JLabel postalCodeLabel;
+    private JLabel provinceLabel;
+    private JLabel phoneNumberLabel;
 
     private Player player;
 
     private JDialog dialog;
     private Repository repository;
-    private PlayerViewMode mode;
+    private Mode mode;
 
     public PlayerView() {
         okButton.addActionListener(this::onOkButtonClicked);
@@ -35,10 +41,15 @@ public class PlayerView {
         editButton.addActionListener(this::onEditButtonClicked);
         idField.setFocusable(false);
         idField.setEditable(false);
+
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 
     private void onOkButtonClicked(ActionEvent e) {
-        if (mode == PlayerViewMode.CREATE) {
+        if (mode == Mode.CREATE) {
             player = repository.createPlayer(
                     firstNameField.getText(),
                     lastNameField.getText(),
@@ -48,7 +59,7 @@ public class PlayerView {
                     phoneNumberField.getText()
             );
             System.out.println("Created player: " + player);
-        } else if (mode == PlayerViewMode.EDIT) {
+        } else if (mode == Mode.EDIT) {
             player = repository.updatePlayer(
                     player.getId(),
                     firstNameField.getText(),
@@ -59,7 +70,7 @@ public class PlayerView {
                     phoneNumberField.getText()
             );
             System.out.println("Updated player: " + player);
-        } else if (mode == PlayerViewMode.DELETE) {
+        } else if (mode == Mode.DELETE) {
             boolean deleted = repository.deletePlayer(player.getId());
             System.out.println("Deleted player: " + deleted);
         }
@@ -78,8 +89,8 @@ public class PlayerView {
     }
 
     private void onEditButtonClicked(ActionEvent e) {
-        if (mode == PlayerViewMode.VIEW) {
-            mode = PlayerViewMode.EDIT;
+        if (mode == Mode.VIEW) {
+            mode = Mode.EDIT;
             showPlayerForEdit();
         }
     }
@@ -138,11 +149,11 @@ public class PlayerView {
         return repository;
     }
 
-    public void setMode(PlayerViewMode mode) {
+    public void setMode(Mode mode) {
         this.mode = mode;
     }
 
-    public PlayerViewMode getMode() {
+    public Mode getMode() {
         return mode;
     }
 
@@ -211,5 +222,12 @@ public class PlayerView {
         setFieldsEditable(false);
         editButton.setVisible(false);
         okButton.setVisible(true);
+    }
+
+    public enum Mode {
+        VIEW,
+        EDIT,
+        CREATE,
+        DELETE,
     }
 }

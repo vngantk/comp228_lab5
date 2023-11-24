@@ -103,7 +103,7 @@ public class PlayerTableView {
     private void onTableMouseDoubleClicked() {
         Player player = getSelectedPlayer();
         if (player != null) {
-            showPlayerView(player, PlayerViewMode.VIEW);
+            showPlayerView(player, PlayerView.Mode.VIEW);
         }
     }
 
@@ -112,10 +112,10 @@ public class PlayerTableView {
     }
 
     private void onNewButtonClicked(ActionEvent e) {
-        showPlayerView(null, PlayerViewMode.CREATE);
+        showPlayerView(null, PlayerView.Mode.CREATE);
     }
 
-    private void showPlayerView(Player player, PlayerViewMode mode) {
+    private void showPlayerView(Player player, PlayerView.Mode mode) {
         PlayerView playerView = new PlayerView();
         playerView.setPlayer(player);
         playerView.setMode(mode);
@@ -128,14 +128,14 @@ public class PlayerTableView {
     private void onDeleteButtonClicked(ActionEvent e) {
         Player player = getSelectedPlayer();
         if (player != null) {
-            showPlayerView(player, PlayerViewMode.DELETE);
+            showPlayerView(player, PlayerView.Mode.DELETE);
         }
     }
 
     private void onEditButtonClicked(ActionEvent e) {
         Player player = getSelectedPlayer();
         if (player != null) {
-            showPlayerView(player, PlayerViewMode.EDIT);
+            showPlayerView(player, PlayerView.Mode.EDIT);
         }
     }
 

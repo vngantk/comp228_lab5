@@ -20,7 +20,7 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="1e691" class="javax.swing.JLabel">
+          <component id="1e691" class="javax.swing.JLabel" binding="firstNameLabel">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag top="10" left="0" bottom="5" right="0" weightx="0.0" weighty="0.0"/>
@@ -40,7 +40,7 @@
               <text value="ID:"/>
             </properties>
           </component>
-          <component id="42a8b" class="javax.swing.JLabel">
+          <component id="42a8b" class="javax.swing.JLabel" binding="lastNameLabel">
             <constraints>
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag top="10" left="0" bottom="5" right="0" weightx="0.0" weighty="0.0"/>
@@ -50,7 +50,7 @@
               <text value="Last Name:"/>
             </properties>
           </component>
-          <component id="18b12" class="javax.swing.JLabel">
+          <component id="18b12" class="javax.swing.JLabel" binding="addressLabel">
             <constraints>
               <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag top="10" left="0" bottom="5" right="0" weightx="0.0" weighty="0.0"/>
@@ -60,7 +60,7 @@
               <text value="Address:"/>
             </properties>
           </component>
-          <component id="2eec8" class="javax.swing.JLabel">
+          <component id="2eec8" class="javax.swing.JLabel" binding="postalCodeLabel">
             <constraints>
               <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag top="10" left="0" bottom="5" right="0" weightx="0.0" weighty="0.0"/>
@@ -70,7 +70,7 @@
               <text value="Postal Code:"/>
             </properties>
           </component>
-          <component id="eb460" class="javax.swing.JLabel">
+          <component id="eb460" class="javax.swing.JLabel" binding="provinceLabel">
             <constraints>
               <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag top="10" left="0" bottom="5" right="0" weightx="0.0" weighty="0.0"/>
@@ -80,7 +80,7 @@
               <text value="Province:"/>
             </properties>
           </component>
-          <component id="6518c" class="javax.swing.JLabel">
+          <component id="6518c" class="javax.swing.JLabel" binding="phoneNumberLabel">
             <constraints>
               <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag top="10" left="0" bottom="5" right="0" weightx="0.0" weighty="0.0"/>
@@ -143,7 +143,7 @@
               <gridbag weightx="1.0" weighty="0.0"/>
             </constraints>
             <properties>
-              <columns value="10"/>
+              <columns value="15"/>
             </properties>
           </component>
           <component id="e6e86" class="javax.swing.JTextField" binding="provinceField">
@@ -154,7 +154,7 @@
               <gridbag weightx="1.0" weighty="0.0"/>
             </constraints>
             <properties>
-              <columns value="20"/>
+              <columns value="15"/>
             </properties>
           </component>
           <component id="7dda8" class="javax.swing.JTextField" binding="phoneNumberField">
