@@ -142,4 +142,17 @@ public interface Repository {
      */
     public void deleteAllPlayerAndGames();
 
+    /**
+     * Delete all player and games for the given player id.
+     * @param playerId the id of the player
+     */
+    public void deletePlayerAndGamesByPlayerId(int playerId);
+
+    /**
+     * Get all player and games for the given game id.
+     * @param playerId the id of the player
+     * @return all player and games for the given player id
+     */
+    public PlayerAndGame[] getPlayerAndGamesByPlayerId(int playerId);
+
 }

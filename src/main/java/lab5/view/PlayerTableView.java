@@ -18,32 +18,28 @@ public class PlayerTableView {
     private JPanel centerPanel;
     private JButton refreshButton;
     private JButton newButton;
-    private JButton UpdateButton;
-    private JButton deleteButton;
     private JScrollPane scrollPanel;
-    private JButton editButton;
+    private JButton detailsButton;
 
     private final PlayerTableModel tableModel = new PlayerTableModel();
     private final JTable table = new JTable(tableModel);
     private Repository repository;
+    private PlayerView playerView;
 
     public JPanel getMainPanel() {
         return mainPanel;
     }
 
     public PlayerTableView() {
+        scrollPanel.setViewportView(table);
+        refreshButton.addActionListener(this::onRefreshButtonClicked);
+        newButton.addActionListener(this::onNewButtonClicked);
+        detailsButton.addActionListener(this::onDetailsButtonClicked);
+        scrollPanel.setPreferredSize(new Dimension(800, 600));
         createUIComponents();
     }
 
     private void createUIComponents() {
-        scrollPanel.setViewportView(table);
-        refreshButton.addActionListener(this::onRefreshButtonClicked);
-        newButton.addActionListener(this::onNewButtonClicked);
-        deleteButton.addActionListener(this::onDeleteButtonClicked);
-        deleteButton.setEnabled(false);
-        editButton.addActionListener(this::onEditButtonClicked);
-        editButton.setEnabled(false);
-        scrollPanel.setPreferredSize(new Dimension(800, 600));
         customizeTable();
     }
 
@@ -59,17 +55,7 @@ public class PlayerTableView {
         columnModel.getColumn(6).setPreferredWidth(150);
         table.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.getSelectionModel().addListSelectionListener(e -> {
-            if (e.getValueIsAdjusting()) {
-                return;
-            }
-            Player player = getSelectedPlayer();
-            if (player != null) {
-                editButton.setEnabled(true);
-                deleteButton.setEnabled(true);
-            } else {
-                editButton.setEnabled(false);
-                deleteButton.setEnabled(false);
-            }
+            detailsButton.setEnabled(table.getSelectedRow() >= 0 && table.getSelectedRow() < tableModel.getPayerCount());
         });
         table.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent mouseEvent) {
@@ -80,6 +66,7 @@ public class PlayerTableView {
                 }
             }
         });
+        detailsButton.setEnabled(false);
     }
 
     public void refresh() {
@@ -100,10 +87,17 @@ public class PlayerTableView {
         return repository;
     }
 
+    private void onDetailsButtonClicked(ActionEvent e) {
+        Player player = getSelectedPlayer();
+        if (player != null) {
+            showPlayerView(player, false);
+        }
+    }
+
     private void onTableMouseDoubleClicked() {
         Player player = getSelectedPlayer();
         if (player != null) {
-            showPlayerView(player, PlayerView.Mode.VIEW);
+            showPlayerView(player, false);
         }
     }
 
@@ -112,31 +106,18 @@ public class PlayerTableView {
     }
 
     private void onNewButtonClicked(ActionEvent e) {
-        showPlayerView(null, PlayerView.Mode.CREATE);
+        showPlayerView(null, true);
     }
 
-    private void showPlayerView(Player player, PlayerView.Mode mode) {
-        PlayerView playerView = new PlayerView();
-        playerView.setPlayer(player);
-        playerView.setMode(mode);
+    private void showPlayerView(Player player, boolean create) {
+        if (playerView == null) {
+            playerView = new PlayerView(SwingUtilities.getWindowAncestor(mainPanel));
+        }
         playerView.setRepository(repository);
-        Window window = SwingUtilities.getWindowAncestor(mainPanel);
-        playerView.show(window);
+        playerView.setPlayer(create ? null : player);
+
+        playerView.show(create);
         refresh();
-    }
-
-    private void onDeleteButtonClicked(ActionEvent e) {
-        Player player = getSelectedPlayer();
-        if (player != null) {
-            showPlayerView(player, PlayerView.Mode.DELETE);
-        }
-    }
-
-    private void onEditButtonClicked(ActionEvent e) {
-        Player player = getSelectedPlayer();
-        if (player != null) {
-            showPlayerView(player, PlayerView.Mode.EDIT);
-        }
     }
 
     private Player getSelectedPlayer() {

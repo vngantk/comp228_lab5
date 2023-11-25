@@ -203,7 +203,7 @@ public class JDBCRepository implements Repository {
                 statement.setString(index++, address);
             }
             if (postalCode != null) {
-                statement.setString(index, postalCode);
+                statement.setString(index++, postalCode);
             }
             if (province != null) {
                 statement.setString(index++, province);
@@ -493,6 +493,37 @@ public class JDBCRepository implements Repository {
             PreparedStatement statement = connection.prepareStatement(
                 "DELETE FROM player_and_game")
         ) {
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public PlayerAndGame[] getPlayerAndGamesByPlayerId(int playerId) {
+        try (
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM player_and_game WHERE player_id = ?")
+        ) {
+            statement.setInt(1, playerId);
+            List<PlayerAndGame> playerAndGameList = new ArrayList<>();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    playerAndGameList.add(getPlayerAndGameFromResultSet(resultSet));
+                }
+                return playerAndGameList.toArray(new PlayerAndGame[playerAndGameList.size()]);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deletePlayerAndGamesByPlayerId(int playerId) {
+        try (
+            PreparedStatement statement = connection.prepareStatement(
+                "DELETE FROM player_and_game WHERE player_id = ?")
+        ) {
+            statement.setInt(1, playerId);
             statement.executeUpdate();
         } catch (Exception e) {
             throw new RuntimeException(e);

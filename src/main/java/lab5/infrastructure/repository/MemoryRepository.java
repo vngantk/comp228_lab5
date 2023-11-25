@@ -7,7 +7,9 @@ import lab5.domain.PlayerAndGame;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MemoryRepository implements Repository {
 
@@ -142,6 +144,23 @@ public class MemoryRepository implements Repository {
     @Override
     public void deleteAllPlayerAndGames() {
         playerAndGameMap.clear();
+    }
+
+    @Override
+    public PlayerAndGame[] getPlayerAndGamesByPlayerId(int playerId) {
+        return playerAndGameMap.values().stream()
+            .filter(playerAndGame -> playerAndGame.getPlayerId() == playerId)
+            .toArray(PlayerAndGame[]::new);
+    }
+
+    @Override
+    public void deletePlayerAndGamesByPlayerId(int playerId) {
+        List<PlayerAndGame> playerAndGames = playerAndGameMap.values().stream()
+            .filter(playerAndGame -> playerAndGame.getPlayerId() == playerId)
+            .collect(Collectors.toList());;
+        for (PlayerAndGame playerAndGame : playerAndGames) {
+            playerAndGameMap.remove(playerAndGame.getId());
+        }
     }
 
 }

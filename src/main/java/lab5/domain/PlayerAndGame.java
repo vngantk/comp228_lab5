@@ -1,5 +1,7 @@
 package lab5.domain;
 
+import lab5.application.Repository;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -60,11 +62,27 @@ public class PlayerAndGame {
     @Override
     public String toString() {
         return "PlayerAndGame{" +
-                "id='" + id + '\'' +
-                ", gameId='" + gameId + '\'' +
-                ", playerId='" + playerId + '\'' +
-                ", playingDate='" + playingDate + '\'' +
-                ", score='" + score + '\'' +
-                '}';
+            "id='" + id + '\'' +
+            ", gameId='" + gameId + '\'' +
+            ", playerId='" + playerId + '\'' +
+            ", playingDate='" + playingDate + '\'' +
+            ", score='" + score + '\'' +
+            '}';
     }
+
+    public static PlayerAndGame[] generatePlayerAndGames(Repository repository) {
+        Game[] games = repository.getAllGames();
+        Player[] players = repository.getAllPlayers();
+        long oneYear = 365L * 24 * 60 * 60 * 1000;
+        long startTime = System.currentTimeMillis() - oneYear;
+        for (Player player : players) {
+            int gamesPlayed = (int) (Math.random() * games.length);
+            for (int i = 0; i < gamesPlayed; i++) {
+                Game game = games[(int) (Math.random() * games.length)];
+                repository.createPlayerAndGame(game.getId(), player.getId(), new Date(startTime + (long) (Math.random() * oneYear)), (int) (Math.random() * 1000));
+            }
+        }
+        return repository.getAllPlayerAndGames();
+    }
+
 }
